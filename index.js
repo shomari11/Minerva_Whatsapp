@@ -73,7 +73,7 @@ client.on('message', async msg => {
   }
 
   else if (sess.step === 'dets') {
-    sess.data.location = msg.body.trim();
+    sess.data.dets = msg.body.trim();
     sess.step = 'anon';
     await client.sendMessage(id, 'Do you want to remain anonymous? (yes/no)');
   }
@@ -114,15 +114,20 @@ client.on('message', async msg => {
 
       fs.writeFileSync(filepath, media.data, 'base64');
 
-      const host = process.env.HOSTNAME || `http://localhost:${PORT}`;
-      const publicUrl = `${host}/media/${filename}`;
+      sess.data.mediaPath = filepath;
+      sess.data.mediaUrl = `${process.env.HOSTNAME  || `http://localhost:${PORT}`}/media/${filename}`; 
+
+      // const host = process.env.HOSTNAME || `http://localhost:${PORT}`;
+      // const publicUrl = `${host}/media/${filename}`;
 
       let summary = ` Report received!\n• Date: ${sess.data.date}\n• Time: ${sess.data.time}\n• Location: ${sess.data.location}\n`;
       summary += `• Anonymous: ${sess.data.anonymous}\n`;
       if (!sess.data.anonymous) {
         summary += `• Reporter: ${sess.data.reporter.name} (${sess.data.reporter.contact})\n`;
       }
-      summary += `• Evidence ${publicUrl}`;
+      summary += `• Incident Details: ${sess.data.dets}\n• `;
+      summary += `• Evidence URL: ${sess.data.mediaUrl}`;
+      
 
       await client.sendMessage(id, summary);
       sess.step = 'idle';
