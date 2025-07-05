@@ -1,0 +1,37 @@
+{
+  "5926753389@c.us": {
+    "step": 0,
+    "data": {
+      "name": "John Doe",
+      "email": ""
+    }
+  },
+  "status@broadcast": {
+    "step": 1,
+    "data": {
+      "name": "",
+      "email": "Hold dem😂"
+    }
+  },
+  "120363180546222585@g.us": {
+    "step": "idle",
+    "data": {}
+  },
+  "120363398250594674@g.us": {
+    "step": "idle",
+    "data": {}
+  },
+  "5926768699@c.us": {
+    "step": "location incident occured",
+    "data": {
+      "date": "08-07-2017",
+      "time": "09:00",
+      "location": "Lance gibs street",
+      "anonymous": true
+    }
+  },
+  "120363400241936643@g.us": {
+    "step": "idle",
+    "data": {}
+  }
+}

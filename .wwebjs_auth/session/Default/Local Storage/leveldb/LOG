@@ -1,0 +1,6 @@
+2025/07/05-16:29:28.657 4268 Creating DB C:\Users\shoma\whatsapp bot\whatsapp-bot\.wwebjs_auth\session\Default\Local Storage\leveldb since it was missing.
+2025/07/05-16:29:28.677 4268 Reusing MANIFEST C:\Users\shoma\whatsapp bot\whatsapp-bot\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2025/07/05-16:29:28.678 4268 Recovering log #4
+2025/07/05-16:29:28.678 4268 Level-0 table #3: started
+2025/07/05-16:29:28.685 4268 Level-0 table #3: 23228 bytes OK
+2025/07/05-16:29:28.688 4268 Delete type=0 #4
