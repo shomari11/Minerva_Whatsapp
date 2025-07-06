@@ -82,7 +82,7 @@ client.on('message', async msg => {
 }
 
   else if (sess.step === 'dets') {
-    sess.data.location = msg.body.trim();
+    sess.data.details = msg.body.trim();
     sess.step = 'anon';
     await client.sendMessage(id, 'Do you want to remain anonymous? (yes/no)');
   }
@@ -132,6 +132,9 @@ client.on('message', async msg => {
         } else {
           summary += `• Location: ${sess.data.location}\n`;
         }
+
+        summary += `• Detials : ${sess.data.details}`;
+
       summary += `• Anonymous: ${sess.data.anonymous}\n`;
       if (!sess.data.anonymous) {
         summary += `• Reporter: ${sess.data.reporter.name} (${sess.data.reporter.contact})\n`;
