@@ -60,6 +60,12 @@ client.on('message', async msg => {
     await client.sendMessage(id, ' What time did it happen? (HH:MM)');
   }
 
+  else if (sess.step === 'time') {
+    sess.data.time = msg.body.trim();
+    sess.step = 'location';
+    await client.sendMessage(id,'Please share the incident location using WhatsApp’s “Attach → Location” feature.');
+  }
+
   else if (sess.step === 'location') {
   if (msg.location) {
     // They sent a live location pin
@@ -75,14 +81,8 @@ client.on('message', async msg => {
   }
 }
 
-  else if (sess.step === 'location') {
-    sess.data.location = msg.body.trim();
-    sess.step = 'dets';
-    await client.sendMessage(id, 'Please stste the details of the incident');
-  }
-
   else if (sess.step === 'dets') {
-    sess.data.dets = msg.body.trim();
+    sess.data.location = msg.body.trim();
     sess.step = 'anon';
     await client.sendMessage(id, 'Do you want to remain anonymous? (yes/no)');
   }
@@ -123,25 +123,20 @@ client.on('message', async msg => {
 
       fs.writeFileSync(filepath, media.data, 'base64');
 
-      sess.data.mediaPath = filepath;
-      sess.data.mediaUrl = `${process.env.HOSTNAME  || `http://localhost:${PORT}`}/media/${filename}`; 
+      const host = process.env.HOSTNAME || `http://localhost:${PORT}`;
+      const publicUrl = `${host}/media/${filename}`;
 
-      // const host = process.env.HOSTNAME || `http://localhost:${PORT}`;
-      // const publicUrl = `${host}/media/${filename}`;
-
-      let summary = `Report received!\n• Date: ${sess.data.date}\n• Time: ${sess.data.time}\n`;
-if (typeof sess.data.location === 'object') {
-  summary += `• Location: ${sess.data.location.name || ''} (${sess.data.location.latitude}, ${sess.data.location.longitude})\n`;
-} else {
-  summary += `• Location: ${sess.data.location}\n`;
-}
+     let summary = `Report received!\n• Date: ${sess.data.date}\n• Time: ${sess.data.time}\n`;
+      if (typeof sess.data.location === 'object') {
+          summary += `• Location: ${sess.data.location.name || ''} (${sess.data.location.latitude}, ${sess.data.location.longitude})\n`;
+        } else {
+          summary += `• Location: ${sess.data.location}\n`;
+        }
       summary += `• Anonymous: ${sess.data.anonymous}\n`;
       if (!sess.data.anonymous) {
         summary += `• Reporter: ${sess.data.reporter.name} (${sess.data.reporter.contact})\n`;
       }
-      summary += `• Incident Details: ${sess.data.dets}\n• `;
-      summary += `• Evidence URL: ${sess.data.mediaUrl}`;
-      
+      summary += `• Evidence ${publicUrl}`;
 
       await client.sendMessage(id, summary);
       sess.step = 'idle';
