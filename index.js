@@ -60,11 +60,20 @@ client.on('message', async msg => {
     await client.sendMessage(id, ' What time did it happen? (HH:MM)');
   }
 
-  else if (sess.step === 'time') {
-    sess.data.time = msg.body.trim();
-    sess.step = 'location';
-    await client.sendMessage(id, ' Where did it occur?');
+  else if (sess.step === 'location') {
+  if (msg.location) {
+    // They sent a live location pin
+    const { latitude, longitude, name, address } = msg.location;
+    sess.data.location = { latitude, longitude, name, address };
+    sess.step = 'dets';
+    await client.sendMessage(id, 'Got it! Now please state the details of the incident.');
+  } else {
+    // Fallback if they type text instead
+    sess.data.location = msg.body.trim();
+    sess.step = 'dets';
+    await client.sendMessage(id, 'Thanks—please now state the details of the incident.');
   }
+}
 
   else if (sess.step === 'location') {
     sess.data.location = msg.body.trim();
@@ -120,7 +129,12 @@ client.on('message', async msg => {
       // const host = process.env.HOSTNAME || `http://localhost:${PORT}`;
       // const publicUrl = `${host}/media/${filename}`;
 
-      let summary = ` Report received!\n• Date: ${sess.data.date}\n• Time: ${sess.data.time}\n• Location: ${sess.data.location}\n`;
+      let summary = `Report received!\n• Date: ${sess.data.date}\n• Time: ${sess.data.time}\n`;
+if (typeof sess.data.location === 'object') {
+  summary += `• Location: ${sess.data.location.name || ''} (${sess.data.location.latitude}, ${sess.data.location.longitude})\n`;
+} else {
+  summary += `• Location: ${sess.data.location}\n`;
+}
       summary += `• Anonymous: ${sess.data.anonymous}\n`;
       if (!sess.data.anonymous) {
         summary += `• Reporter: ${sess.data.reporter.name} (${sess.data.reporter.contact})\n`;
