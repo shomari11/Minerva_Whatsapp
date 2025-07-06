@@ -2,13 +2,18 @@
   "5926768699@c.us": {
     "step": "idle",
     "data": {
-      "date": "Date 1",
-      "time": "Time 1",
-      "location": "Details",
-      "dets": "Dets 2",
-      "anonymous": true,
+      "date": "Date 4",
+      "time": "Time 4",
+      "location": "Lance gibs street",
+      "dets": "Fell off a bridge",
+      "anonymous": false,
       "mediaPath": "/home/shivesh/Documents/web_development/Minerva_Whatsapp/public/media/1751751144340_5926768699.jpeg",
-      "mediaUrl": "http://localhost:3000/media/1751751144340_5926768699.jpeg"
+      "mediaUrl": "http://localhost:3000/media/1751751144340_5926768699.jpeg",
+      "details": "This was a big crash",
+      "reporter": {
+        "name": "Shomari",
+        "contact": "6768699"
+      }
     }
   },
   "5926122135@c.us": {
@@ -20,5 +25,19 @@
   "status@broadcast": {
     "step": "idle",
     "data": {}
+  },
+  "120363400241936643@g.us": {
+    "step": "idle",
+    "data": {}
+  },
+  "120363239080234418@g.us": {
+    "step": "idle",
+    "data": {
+      "date": "3/4/2005",
+      "time": "10:33pm",
+      "location": "incident",
+      "dets": "",
+      "anonymous": true
+    }
   }
 }

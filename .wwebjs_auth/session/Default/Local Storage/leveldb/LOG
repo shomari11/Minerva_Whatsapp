@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-2025/07/05-21:55:27.245 11359 Reusing MANIFEST /home/shivesh/Documents/web_development/Minerva_Whatsapp/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
-2025/07/05-21:55:27.245 11359 Recovering log #4
-2025/07/05-21:55:27.245 11359 Reusing old log /home/shivesh/Documents/web_development/Minerva_Whatsapp/.wwebjs_auth/session/Default/Local Storage/leveldb/000004.log 
-=======
-2025/07/05-21:53:44.442 4724 Reusing MANIFEST C:\Users\shoma\whatsapp bot\whatsapp-bot\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
-2025/07/05-21:53:44.443 4724 Recovering log #3
-2025/07/05-21:53:44.444 4724 Reusing old log C:\Users\shoma\whatsapp bot\whatsapp-bot\.wwebjs_auth\session\Default\Local Storage\leveldb/000003.log 
->>>>>>> ee92c312a6a5d8179f7751ff4e3ac1d72ce28605
+2025/07/06-03:08:14.549 3122a Reusing MANIFEST /home/shivesh/Documents/web_development/Minerva_Whatsapp/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
+2025/07/06-03:08:14.549 3122a Recovering log #4
+2025/07/06-03:08:14.549 3122a Reusing old log /home/shivesh/Documents/web_development/Minerva_Whatsapp/.wwebjs_auth/session/Default/Local Storage/leveldb/000004.log 
+2025/07/06-06:38:34.623 3171f Level-0 table #8: started
+2025/07/06-06:38:34.624 3171f Level-0 table #8: 14857 bytes OK
+2025/07/06-06:38:34.626 3171f Delete type=0 #4

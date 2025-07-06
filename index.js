@@ -1,3 +1,5 @@
+const { MongoClient } = require('mongodb');
+const { v4: uuidv4 } = require('uuid');
 
 const fs = require('fs');
 const path = require('path');
@@ -6,9 +8,29 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode  = require('qrcode-terminal');
 
 
+const MONGO_URI = "mongodb+srv://admin:iPPgoPwwcqo472xN@cf-test.gfnjq.mongodb.net/hsse-hackathon?retryWrites=true&w=majority&appName=hsse-hackathon";
+const mongoClient = new MongoClient(MONGO_URI);
+let reportsCollection;
+
+mongoClient.connect()
+  .then(() => {
+    const db = mongoClient.db("hsse-hackathon");
+    reportsCollection = db.collection("reports");
+    console.log("Connected to Database");
+  })
+  .catch(err => console.error(" Database Connection Error:", err));
+
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MEDIA_DIR = path.join(__dirname, 'public/media');
+
+
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(` Media server running on port ${PORT}.`);
@@ -82,7 +104,7 @@ client.on('message', async msg => {
 }
 
   else if (sess.step === 'dets') {
-    sess.data.details = msg.body.trim();
+    sess.data.dets = msg.body.trim();
     sess.step = 'anon';
     await client.sendMessage(id, 'Do you want to remain anonymous? (yes/no)');
   }
@@ -126,6 +148,30 @@ client.on('message', async msg => {
       const host = process.env.HOSTNAME || `http://localhost:${PORT}`;
       const publicUrl = `${host}/media/${filename}`;
 
+
+
+    const reportDoc = {
+      publicId: uuidv4().replace(/-/g,'').slice(0,24),
+      date:        sess.data.date,
+      time:        sess.data.time,
+      location:    sess.data.location,       
+      anonymous:   sess.data.anonymous,
+      reporter:    sess.data.anonymous ? null : sess.data.reporter, 
+      details:     sess.data.dets,
+      evidence:    {
+        path: sess.data.mediaPath,
+        url:  sess.data.mediaUrl
+      },
+      createdAt:   new Date(),
+      source: 'Whatsapp'
+    };
+
+
+
+    const result = await reportsCollection.insertOne(reportDoc);
+    console.log("Inserted report with _id:", result.insertedId);
+
+
      let summary = `Report received!\n• Date: ${sess.data.date}\n• Time: ${sess.data.time}\n`;
       if (typeof sess.data.location === 'object') {
           summary += `• Location: ${sess.data.location.name || ''} (${sess.data.location.latitude}, ${sess.data.location.longitude})\n`;
@@ -133,7 +179,7 @@ client.on('message', async msg => {
           summary += `• Location: ${sess.data.location}\n`;
         }
 
-        summary += `• Detials : ${sess.data.details}`;
+        summary += `• Detials : ${sess.data.dets}`;
 
       summary += `• Anonymous: ${sess.data.anonymous}\n`;
       if (!sess.data.anonymous) {
@@ -144,7 +190,7 @@ client.on('message', async msg => {
       await client.sendMessage(id, summary);
       sess.step = 'idle';
     } catch (error) {
-      console.error('Error handling media:', error);
+      console.error('Error handling media or DB insert:', error);
       await client.sendMessage(id, 'Error saving media. Please try again.');
     }
   }
