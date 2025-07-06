@@ -2,13 +2,23 @@
   "5926768699@c.us": {
     "step": "idle",
     "data": {
-      "date": "Date 2",
-      "time": "Time 2",
-      "location": "Location 2",
+      "date": "Date 1",
+      "time": "Time 1",
+      "location": "Details",
       "dets": "Dets 2",
       "anonymous": true,
       "mediaPath": "/home/shivesh/Documents/web_development/Minerva_Whatsapp/public/media/1751751144340_5926768699.jpeg",
       "mediaUrl": "http://localhost:3000/media/1751751144340_5926768699.jpeg"
     }
+  },
+  "5926122135@c.us": {
+    "step": "time",
+    "data": {
+      "date": "Date"
+    }
+  },
+  "status@broadcast": {
+    "step": "idle",
+    "data": {}
   }
 }
